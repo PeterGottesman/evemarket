@@ -1,0 +1,8 @@
+./emdr.py:82: Warning: Out of range value for column 'issueDate' at row 1
+  row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10]))
+./emdr.py:108: Warning: Out of range value for column 'issueDate' at row 1
+  row[0], row[1], row[2], row[3], row[4], row[5]))
+Consumer daemon started, waiting for jobs...
+Worker pool size: 200
+Exiting
+Exception KeyError: KeyError(3070375532L,) in <module 'threading' from '/usr/lib/python2.6/threading.pyc'> ignored

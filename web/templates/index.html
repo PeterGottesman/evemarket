@@ -16,14 +16,18 @@
             <thead>
                 <tr>
                     <th id="item">Item</th>
+                    <th id="typeid">typeid</th>
                     <th id="margin">Margin</th>
+                    <th id="quantity">Quantity</th>
                 </tr>
             </thead>
             <tbody>
-                {% for id, margin in trades.iteritems() %}
+                {% for id, values in trades.iteritems() %}
                 <tr>
                     <td> {{id}} </td>
-                    <td> {{margin}} </td>
+                    {% for value in values %}
+                    <td> {{value}} </td>
+                    {% endfor %}
                 </tr>
                 {% endfor %}
             </tbody>

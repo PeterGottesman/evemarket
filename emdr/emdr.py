@@ -61,6 +61,10 @@ def worker(job_json):
     except KeyError as e:
         log("Error getting result type")
         return
+    
+    if market_data['generator']['name']=='EveData.Org':
+        log("Ignoring evedata.org")
+        return
 
     cursor, conn = dbcon.connect()
     if resultType == 'orders':
@@ -94,7 +98,7 @@ def worker(job_json):
             log("Error parsing order rowsets")
             conn.close()
             return
-    elif resultType == 'history':
+    elif resultType == 'history': #disable quickly. this is stupid
         insert_sql = "INSERT INTO history (typeid, regionid, issuedate, orders, low, high, average, quantity) VALUES"
         values = "('%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d'),"
         delete_sql = "DELETE FROM history WHERE regionid = %d AND typeid = %d" 
@@ -109,6 +113,7 @@ def worker(job_json):
                     log("MySQL Error [%d]: %s" % (e.args[0], e.args[1]))
                     conn.rollback()
                 for row in rowset['rows']:
+                    print row
                     insert_sql += values % (rowset['typeID'], rowset['regionID'], arrow.get(row[0]).datetime.strftime('%Y-%m-%d %H:%M:%S'), row[1], row[2], row[3], row[4], row[5])
                 try:
                     cursor.execute(insert_sql[:-1])
